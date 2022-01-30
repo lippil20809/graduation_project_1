@@ -1,12 +1,10 @@
-
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import User from "../components/User";
-import {getUsers,getSlise} from '../store/users'
-import {Statuses} from 'store/types'
-
+import User from "../commponents/User";
+import { getUser, getSlise } from "../store/user";
+import { Statuses } from "../store/types";
 
 const UsersContainer = styled("div")`
   display: flex;
@@ -18,29 +16,22 @@ const UsersContainer = styled("div")`
 `;
 
 const Users: React.FC = () => {
-  const params = useParams<{page?:string,results?:string}>()
+  //const params = useParams<{ page?: string; results?: string }>();
   const dispatch = useDispatch();
-  const { users, usersRequestStatus } = useSelector(getSlise);
+  const { user, userRequestStatus } = useSelector(getSlise);
 
-  useEffect(() =>{
-    if(params.page && params.results){
-      dispatch(getUsers(Number(params.page),Number((params.results))))
-    }
-    
-  },[dispatch,params.page,params.results])
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
-
-  
-
+  //console.log(user)
   return (
     <UsersContainer>
-      {usersRequestStatus === Statuses.PENDING && "loading..."}
-      {usersRequestStatus === Statuses.FAILURE && "some error..."}
-      {users?.map((user)=>(
-         <User key={user.results.login.uuid}{...user}/>
+      {userRequestStatus === Statuses.PENDING && "loading..."}
+      {userRequestStatus === Statuses.FAILURE && "some error..."}
+      {user?.map (user => (
+         <User key={user.login.uuid}{...user}/>
       ))}
-    
-      
     </UsersContainer>
   );
 };

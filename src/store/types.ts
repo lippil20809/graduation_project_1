@@ -1,4 +1,4 @@
-import {State as UsersState} from './users/users.types'
+import {State as UsersState} from './user/user.types'
 
 export enum Statuses {
     PENDING,
@@ -8,5 +8,5 @@ export enum Statuses {
   }
 
   export interface RootState {
-      readonly users: UsersState;
-  }
+    readonly user: UsersState;
+} 

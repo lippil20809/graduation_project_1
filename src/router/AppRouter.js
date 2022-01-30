@@ -1,17 +1,18 @@
 import React, { lazy, Suspense } from "react";
 
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-const UsersPage = lazy(() => import("../pages/Users"));
+// import PostsPage from "../pages/Posts";
+// import PostDetailPage from "../pages/PostDetail";
+
+const UsersPage = lazy(() => import("../pages/User"));
 
 
 const AppRouter = () => {
   return (
     <Suspense fallback="loading component...">
       <Routes>
-        <Route path="users">
-          <Route index element={<UsersPage />} />
-        </Route>
+          <Route path="user" index element={<UsersPage />} />
       </Routes>
     </Suspense>
   );

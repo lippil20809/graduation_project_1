@@ -6,14 +6,17 @@ import {
   } from "redux";
   import thunk from "redux-thunk";
   
-  import { usersReducer  } from "./users";
+  import { userReducer  } from "./user";
   
   const logger: Middleware = (store) => (next) => (action) => {
     console.log(action);
     return next(action);
   };
   
-  const reducers = combineReducers({ users: usersReducer });
+  const reducers = combineReducers({ user: userReducer });
   const store = createStore(reducers, applyMiddleware(logger, thunk));
+
+  console.log(reducers)
+  console.log(store)
   
   export default store;

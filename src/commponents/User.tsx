@@ -1,7 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
-import {UsersTypes} from '../api/users.types'
+import styled from 'styled-components'
+import { UserProps } from "./User.types";
 
 const UserContainer = styled("div")`
   flex: 0 0 calc(100% / 4 - 16px);
@@ -22,15 +22,22 @@ const UserContainer = styled("div")`
     list-style: none;
     margin: 0px;
     padding: 0px;
+    > li {
+     font-size: 16px;
+    }
   }
 `;
 
-const User: React.FC<UsersTypes> = ({ results }) => {
-  const [{name, location,email,phone,picture}] = results
-
+const User: React.FC<UserProps> = ({
+  name,
+  location,
+  email,
+  phone,
+  picture,
+}) => {
   return (
     <UserContainer>
-      <img width="100px" height="100px" alt={name.first} src={picture.medium} />
+        <img width="100px" height="100px" alt={name.first} src={picture.medium} />
       <h6>
         {name.title} {name.first} {name.last}
       </h6>
