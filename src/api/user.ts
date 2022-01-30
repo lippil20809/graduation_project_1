@@ -4,7 +4,7 @@ import { UsersResponse } from "./user.types";
 
 export const getUser = async () => {
   const { data } = await axios.get<UsersResponse>(
-    `https://randomuser.me/api/?results`
+    `https://randomuser.me/api/`
   );
 
   return data;
