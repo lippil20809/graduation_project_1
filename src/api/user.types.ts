@@ -1,17 +1,17 @@
 export interface UsersResponse {
-    results: User[];
+    results: UserResults[];
     info: UserInfo;
   }
   export interface UserName {
-    title: string;
+    title: string ;
     first: string;
     last: string;
   }
   export interface UserLocation {
-    street: string;
+    street:string
     city: string;
     state: string;
-    postcode: string;
+    postcode: number;
     coordinates: UserCoordinates;
     timezone: UserTimezone;
   }
@@ -57,7 +57,7 @@ export interface UsersResponse {
     page: number;
     version: string;
   }
-  export interface User {
+  export interface UserResults {
     gender: string;
     name: UserName;
     location: UserLocation;

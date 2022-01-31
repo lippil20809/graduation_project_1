@@ -1,7 +1,7 @@
 import React from "react";
 
 import styled from 'styled-components'
-import { UserProps } from "./User.types";
+import { UserProps } from "../User/User.types";
 
 const UserContainer = styled("div")`
   flex: 0 0 calc(100% / 4 - 16px);
@@ -42,9 +42,9 @@ const User: React.FC<UserProps> = ({
         {name.title} {name.first} {name.last}
       </h6>
       <ul>
-        <li>
-          location: {location.state}, {location.city}, {location.street}
-        </li>
+        {/* <li>
+          location:  {location.city}, {location.street}
+        </li> */}
         <li>phone: {phone}</li>
         <li>email: {email}</li>
       </ul>

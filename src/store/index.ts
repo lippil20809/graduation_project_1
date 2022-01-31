@@ -16,7 +16,6 @@ import {
   const reducers = combineReducers({ user: userReducer });
   const store = createStore(reducers, applyMiddleware(logger, thunk));
 
-  console.log(reducers)
-  console.log(store)
+
   
   export default store;
