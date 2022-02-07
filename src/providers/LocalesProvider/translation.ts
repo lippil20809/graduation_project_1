@@ -1,4 +1,6 @@
-export const ru = {
+import {Traslation} from './LocalesProvider.types'
+
+export const ru:Traslation = {
     details: 'Детали',
     email: 'почта',
     street: 'улица',
@@ -14,7 +16,7 @@ export const ru = {
     changeTheme: 'Изменить тему',
     changeLang: 'Изменить язык'
 };
-export const en = {
+export const en:Traslation = {
     details: 'Details',
     email: 'email',
     street: 'street',

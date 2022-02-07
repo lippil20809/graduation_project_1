@@ -1,5 +1,8 @@
-export const lightTheme = {
-    color: {
+import React from 'react';
+
+
+export const lightTheme= {
+    color : {
       main: "#37474f",
       light: "#455a64",
       dark: "#263238",

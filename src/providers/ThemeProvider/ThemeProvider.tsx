@@ -7,26 +7,29 @@ import {
 import { lightTheme, darkTheme } from "./constants";
 
 
+
 const GlobalStyle = createGlobalStyle`
   body {
     padding: 0px;
     margin: 0px;
     width: 100%;
     height: 100vh;
-    background-color: ${(props) => props.theme.backgroundColor.main}
+    background-color: ${(props:any) => props.theme.backgroundColor.main}
+
   }
 `;
 
 
 
 
-const ThemeContext = createContext({});
+const ThemeContext = createContext({ });
 
 export const useTheme = () => useContext(ThemeContext);
 
-const ThemeProvider = ({ children }) => {
-  let themeThemeProvider = JSON.parse(localStorage.getItem('theme'))
-  const [theme, setTheme] = useState(themeThemeProvider);
+const ThemeProvider:React.FC = ({ children }) => {
+  const themeProvider = localStorage.getItem('theme')
+  let themeThemeProvider = themeProvider ?  JSON.parse(themeProvider) : {}
+  const [theme, setTheme] = useState<string>(themeThemeProvider);
 
   useEffect(()=>{
      localStorage.setItem('theme',JSON.stringify(theme))
@@ -34,7 +37,7 @@ const ThemeProvider = ({ children }) => {
 
 
   const toggleTheme = useCallback(() => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev: string) => (prev === "light" ? "dark" : "light"));
   }, []);
 
 
