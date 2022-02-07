@@ -50,8 +50,8 @@ const Users: React.FC = () => {
   const [results, setResults] = useState("");
   const [nat, setNat] = useState("");
   const [gender, setGender] = useState("female");
-  const { toggleTheme }: any = useTheme();
-  const { trans, toggleLang }: any = useLocales();
+  const { toggleTheme } = useTheme();
+  const { trans, toggleLang } = useLocales();
 
   const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
@@ -132,10 +132,10 @@ const Users: React.FC = () => {
           </FormControl>
         </Box>
         <Button onClick={toggleLang} type="button">
-          {trans.changeLang}
+          {trans?.changeLang}
         </Button>
         <Button onClick={toggleTheme} type="button">
-          {trans.changeTheme}
+          {trans?.changeTheme}
         </Button>
       </HeaderContainer>
       <UsersContainer>
