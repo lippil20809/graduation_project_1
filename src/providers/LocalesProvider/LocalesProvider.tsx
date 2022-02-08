@@ -6,11 +6,8 @@ import React, {
   useEffect,
 } from "react";
 import { langs } from "./translation";
-import { Langs, Traslation } from "./LocalesProvider.types";
-interface LocalesContextContext {
-  trans: Traslation,
-  toggleLang?: () => void
-}
+import { Langs,LocalesContextContext } from "./LocalesProvider.types";
+
 export const LocalesContext = createContext<LocalesContextContext>({
   trans: langs.ru
 });
@@ -29,7 +26,7 @@ const LocalesProvider: React.FC = ({ children }) => {
     localStorage.setItem("lang", JSON.stringify(lang));
   }, [lang]);
 
-  const toggleLang = useCallback(() => {
+   const toggleLang = useCallback(() => {
     setLang((prev) => (prev === "en" ? "ru" : "en"));
   }, []);
 

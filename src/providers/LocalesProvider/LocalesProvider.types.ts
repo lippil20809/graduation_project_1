@@ -18,3 +18,8 @@ changeLang:string
 }
 
 export type Traslations = Record<Langs, Traslation>
+
+export interface LocalesContextContext {
+    trans: Traslation,
+    toggleLang?: () => void
+  }

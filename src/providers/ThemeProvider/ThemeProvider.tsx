@@ -5,16 +5,18 @@ import {
 } from "styled-components";
 
 import { lightTheme, darkTheme } from "./constants";
+import {ThemeContextContext,Themes } from './ThemeProvider.type'
 
 
 
-const GlobalStyle = createGlobalStyle`
+
+const GlobalStyle = createGlobalStyle<ThemeContextContext>`
   body {
     padding: 0px;
     margin: 0px;
     width: 100%;
     height: 100vh;
-    background-color: ${(props:any) => props.theme.backgroundColor.main}
+    background-color: ${(props) => props.theme.backgroundColor.main}
 
   }
 `;
@@ -22,14 +24,17 @@ const GlobalStyle = createGlobalStyle`
 
 
 
-const ThemeContext = createContext({ });
+export const ThemeContext = createContext<ThemeContextContext>({});
 
 export const useTheme = () => useContext(ThemeContext);
 
+const getItem = <T extends string>(key: string, defaultValue?: unknown) => {
+  const value = localStorage.getItem("theme") ?? defaultValue
+  return value as T
+}  
+
 const ThemeProvider:React.FC = ({ children }) => {
-  const themeProvider = localStorage.getItem('theme')
-  let themeThemeProvider = themeProvider ?  JSON.parse(themeProvider) : {}
-  const [theme, setTheme] = useState<string>(themeThemeProvider);
+  const [theme, setTheme] = useState<Themes>(getItem<Themes>("light","dark"));
 
   useEffect(()=>{
      localStorage.setItem('theme',JSON.stringify(theme))
@@ -37,7 +42,7 @@ const ThemeProvider:React.FC = ({ children }) => {
 
 
   const toggleTheme = useCallback(() => {
-    setTheme((prev: string) => (prev === "light" ? "dark" : "light"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   }, []);
 
 
@@ -45,7 +50,7 @@ const ThemeProvider:React.FC = ({ children }) => {
   return (
     <StyledThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <ThemeContext.Provider value={{  toggleTheme }}>
         {children}
       </ThemeContext.Provider>
     </StyledThemeProvider>
