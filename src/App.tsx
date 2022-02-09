@@ -1,18 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
-import ThemeProvider from 'providers/ThemeProvider';
+import ThemeProviders from 'providers/ThemeProvider';
 import LocalesProvider from 'providers/LocalesProvider';
+
 
 const App:React.FC =() => {
   return (
-    <ThemeProvider>
+    <ThemeProviders>
       <LocalesProvider>
     <Router>
     <AppRouter />
   </Router>
   </LocalesProvider>
-  </ThemeProvider>
+  </ThemeProviders>
   );
 }
 

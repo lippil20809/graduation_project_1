@@ -14,8 +14,15 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { useTheme } from "../providers/ThemeProvider";
+//import { useTheme } from "../providers/ThemeProvider";
 import { useLocales } from "../providers/LocalesProvider";
+import { useTheme } from "@mui/material";
+import { useModes} from '../providers/ThemeProvider/theme'
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+
+
+//const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 const UsersContainer = styled("div")`
   display: flex;
@@ -50,9 +57,13 @@ const Users: React.FC = () => {
   const [results, setResults] = useState("");
   const [nat, setNat] = useState("");
   const [gender, setGender] = useState("female");
-  const { toggleTheme } = useTheme();
+  //const { toggleTheme } = useTheme();
+  const {toggleColorMode} = useModes()
+  console.log(toggleColorMode)
   const { trans, toggleLang } = useLocales();
-
+  const theme = useTheme()
+  //const colorMode = React.useContext(ColorModeContext);
+  //console.log (colorMode.toggleColorMode)
   const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
   };
@@ -81,9 +92,18 @@ const Users: React.FC = () => {
 
   return (
     <>
+     <CssBaseline />
+      <Container maxWidth="lg">
+      <Box>
       <HeaderContainer>
-        <FormControl>
-          <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+        <FormControl
+          sx={{
+            bgcolor: 'background.default',
+            color: 'text.primary',
+            borderRadius: 1
+          }}
+        >
+          <FormLabel id="demo-controlled-radio-buttons-group">{trans?.genders}</FormLabel>
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
@@ -98,7 +118,7 @@ const Users: React.FC = () => {
             <FormControlLabel value="male" control={<Radio />} label="Male" />
           </RadioGroup>
         </FormControl>
-        <Pagination count={10} onChange={handleChangePage} />
+        <Pagination count={10} page={page} onChange={handleChangePage} />
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Results</InputLabel>
@@ -109,9 +129,11 @@ const Users: React.FC = () => {
               label="Results"
               onChange={handleChangeResults}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+              <MenuItem value={16}>16</MenuItem>
+              <MenuItem value={32}>32</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -128,13 +150,24 @@ const Users: React.FC = () => {
               <MenuItem value={"AU"}>AU</MenuItem>
               <MenuItem value={"BR"}>BR</MenuItem>
               <MenuItem value={"CA"}>CA</MenuItem>
+              <MenuItem value={"CH"}>CH</MenuItem>
+              <MenuItem value={"DE"}>DE</MenuItem>
+              <MenuItem value={"DK"}>DK</MenuItem>
+              <MenuItem value={"ES"}>ES</MenuItem>
+              <MenuItem value={"FI"}>FI</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Button onClick={toggleLang} type="button">
           {trans?.changeLang}
         </Button>
-        <Button onClick={toggleTheme} type="button">
+        <Button 
+          sx={{
+            bgcolor: 'background.default',
+            color: 'text.primary',
+            borderRadius: 1
+          }}
+        onClick={toggleColorMode} type="button"  >
           {trans?.changeTheme}
         </Button>
       </HeaderContainer>
@@ -145,6 +178,8 @@ const Users: React.FC = () => {
           <User key={user.login.uuid} {...user} />
         ))}
       </UsersContainer>
+      </Box>
+      </Container>
     </>
   );
 };

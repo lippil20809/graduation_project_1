@@ -13,6 +13,8 @@ export const ru:Traslation = {
     users: 'Пользователи',
     todos: 'Дела',
     posts: 'Сообщения',
+    genders:'Пол',
+    nationality: 'Национальность',
     changeTheme: 'Изменить тему',
     changeLang: 'Изменить язык'
 };
@@ -29,6 +31,8 @@ export const en:Traslation = {
     users: 'Users',
     todos: 'Todos',
     posts: 'Posts',
+    genders:'Gender',
+    nationality: 'Nationality',
     changeTheme: 'Change theme',
     changeLang: 'Change lang'
 }

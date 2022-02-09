@@ -17,7 +17,6 @@ const GlobalStyle = createGlobalStyle<ThemeContextContext>`
     width: 100%;
     height: 100vh;
     background-color: ${(props) => props.theme.backgroundColor.main}
-
   }
 `;
 
@@ -29,8 +28,9 @@ export const ThemeContext = createContext<ThemeContextContext>({});
 export const useTheme = () => useContext(ThemeContext);
 
 const getItem = <T extends string>(key: string, defaultValue?: unknown) => {
-  const value = localStorage.getItem("theme") ?? defaultValue
-  return value as T
+  const value = localStorage.getItem("theme") 
+  const persistedState = value ? JSON.parse(value) : {};
+  return persistedState as T
 }  
 
 const ThemeProvider:React.FC = ({ children }) => {

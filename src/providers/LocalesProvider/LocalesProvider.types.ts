@@ -13,6 +13,8 @@ albums:string
 users: string
 todos: string
 posts:string
+genders:string
+nationality:string
 changeTheme: string
 changeLang:string
 }
@@ -21,5 +23,5 @@ export type Traslations = Record<Langs, Traslation>
 
 export interface LocalesContextContext {
     trans: Traslation,
-    toggleLang?: () => void
+    toggleLang: () => void
   }

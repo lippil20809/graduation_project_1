@@ -14,7 +14,7 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-
+import { useLocales } from "providers/LocalesProvider";
 
 const UserContainer = styled("div")`
   flex: 0 0 calc(100% / 4 - 16px);
@@ -56,7 +56,7 @@ const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const {trans} = useLocales()
   return (
     <>
     <Button onClick={handleOpen}>
@@ -78,7 +78,7 @@ const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
                 variant="body2"
                 color="text.primary"
               >
-                phone: {phone}
+                {trans?.phone}: {phone}
               </Typography>
             </React.Fragment>
           }
@@ -98,9 +98,9 @@ const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
             {name.title} {name.first} {name.last}
           </h6>
           <ul>
-            <li>phone: {phone}</li>
-            <li>email: {email}</li>
-            <li>nat: {nat}</li>
+            <li>{trans?.phone}: {phone}</li>
+            <li>{trans?.email}: {email}</li>
+            <li>{trans?.nationality}: {nat}</li>
           </ul>
         </Box>
       </Modal>

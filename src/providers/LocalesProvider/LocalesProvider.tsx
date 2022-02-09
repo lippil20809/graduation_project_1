@@ -8,19 +8,22 @@ import React, {
 import { langs } from "./translation";
 import { Langs,LocalesContextContext } from "./LocalesProvider.types";
 
+
 export const LocalesContext = createContext<LocalesContextContext>({
-  trans: langs.ru
+  trans: langs.ru,
+  toggleLang: () => {}
 });
 
 export const useLocales = () => useContext(LocalesContext);
 
 const getItem = <T extends string>(key: string, defaultValue?: unknown) => {
-  const value = localStorage.getItem("lang") ?? defaultValue
-  return value as T
+  const value = localStorage.getItem("lang")
+  const persistedState = value ? JSON.parse(value) : {};
+  return persistedState as T
 } 
 
 const LocalesProvider: React.FC = ({ children }) => {
-  const [lang, setLang] = useState<Langs>(getItem<Langs>('lang', 'ru'));
+  const [lang, setLang] = useState<Langs>(getItem<Langs>('en', 'ru'));
 
   useEffect(() => {
     localStorage.setItem("lang", JSON.stringify(lang));
