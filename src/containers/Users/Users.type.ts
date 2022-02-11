@@ -1,4 +1,4 @@
-import {User,UserInfo} from '../api/user.types'
+import {User,UserInfo} from '../../api/user.types'
 
 export interface UsersProps extends User {
 }

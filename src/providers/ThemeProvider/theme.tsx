@@ -1,13 +1,20 @@
 import  React , { useState, useCallback, createContext, useContext, useEffect,useMemo }  from 'react';
-
 import {  ThemeProvider, createTheme } from '@mui/material/styles';
 
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
+type ThemeMode = 'light' | 'dark'
+
+export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 export const useModes = () => useContext(ColorModeContext);
 
 const  ToggleColorMode :React.FC = ({ children }) => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+ 
+  const [mode, setMode] = useState<ThemeMode>((localStorage.getItem('theme') ?? 'light') as ThemeMode);
+
+  useEffect(() => {
+    localStorage.setItem("theme", mode);
+  }, [mode]);
+
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {

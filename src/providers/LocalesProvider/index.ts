@@ -1,2 +1,2 @@
-export { default } from './LocalesProvider'
-export * from './LocalesProvider'
+export { default } from './i18next'
+export * from './i18next'

@@ -8,11 +8,11 @@ import LocalesProvider from 'providers/LocalesProvider';
 const App:React.FC =() => {
   return (
     <ThemeProviders>
-      <LocalesProvider>
+   
     <Router>
     <AppRouter />
   </Router>
-  </LocalesProvider>
+ 
   </ThemeProviders>
   );
 }

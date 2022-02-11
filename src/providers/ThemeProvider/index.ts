@@ -1,4 +1,2 @@
-// export { default } from "./ThemeProvider";
-// export * from "./ThemeProvider";
-
 export {default} from './theme'
+export * from "./theme";
