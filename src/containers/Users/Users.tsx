@@ -20,6 +20,8 @@ import {
   CssBaseline,
   Container,
   ButtonGroup,
+  LinearProgress,
+  Alert,
 } from "@mui/material";
 import { useModes } from "../../providers/ThemeProvider/theme";
 import "../../providers/LocalesProvider/i18next";
@@ -51,10 +53,14 @@ const HeaderContainer = styled("div")`
 const Users: React.FC = () => {
   const dispatch = useDispatch();
   const { user, userRequestStatus } = useSelector(getSlise);
-  const [page, setPage] = useState(1);
-  const [results, setResults] = useState("");
-  const [nat, setNat] = useState("");
-  const [gender, setGender] = useState("female");
+  const [page, setPage] = useState(
+    (Number(localStorage.getItem("page")) || 1) as number
+  );
+  const [results, setResults] = useState(localStorage.getItem("results") ?? "");
+  const [nat, setNat] = useState(localStorage.getItem("nat") ?? "");
+  const [gender, setGender] = useState(
+    localStorage.getItem("gender") ?? "female"
+  );
   const { toggleColorMode } = useModes();
   const { t, i18n } = useTranslation();
   const changleLanguage = (lang: string) => {
@@ -77,124 +83,133 @@ const Users: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getUser(page,results,nat,gender));
-  }, [dispatch,page,results,nat,gender]);
+    localStorage.setItem("page", JSON.stringify(page));
+    localStorage.setItem("results", results);
+    localStorage.setItem("nat", nat);
+    localStorage.setItem("gender", gender);
+    dispatch(getUser(page, results, nat, gender));
+  }, [dispatch, page, results, nat, gender]);
   return (
     <>
-    <CssBaseline />
-    <Container maxWidth="lg">
-      <Box>
-        <HeaderContainer>
-          <FormControl
-            sx={{
-              bgcolor: "background.default",
-              color: "text.primary",
-              borderRadius: 1,
-            }}
-          >
-            <FormLabel id="demo-controlled-radio-buttons-group">
-              {t("genders")}
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={gender}
-              onChange={handleChangeGender}
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Box>
+          <HeaderContainer>
+            <FormControl
+              sx={{
+                bgcolor: "background.default",
+                color: "text.primary",
+                borderRadius: 1,
+              }}
             >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Femal"
-              />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Male"
-              />
-            </RadioGroup>
-          </FormControl>
-          <Pagination count={10} page={page} onChange={handleChangePage} />
-          <Box sx={{ minWidth: 150 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                {t("results")}
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={results}
-                label="Results"
-                onChange={handleChangeResults}
+              <FormLabel id="demo-controlled-radio-buttons-group">
+                {t("genders")}
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={gender}
+                onChange={handleChangeGender}
               >
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={8}>8</MenuItem>
-                <MenuItem value={16}>16</MenuItem>
-                <MenuItem value={32}>32</MenuItem>
-              </Select>
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Femal"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+              </RadioGroup>
             </FormControl>
-          </Box>
-          <Box sx={{ minWidth: 170 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                {t("nationality")}
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={nat}
-                label="Nat"
-                onChange={handleChangeNat}
+            <Pagination count={10} page={page} onChange={handleChangePage} />
+            <Box sx={{ minWidth: 150 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  {t("results")}
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={results}
+                  label="Results"
+                  onChange={handleChangeResults}
+                >
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={8}>8</MenuItem>
+                  <MenuItem value={16}>16</MenuItem>
+                  <MenuItem value={32}>32</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box sx={{ minWidth: 170 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  {t("nationality")}
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={nat}
+                  label="Nat"
+                  onChange={handleChangeNat}
+                >
+                  <MenuItem value={"AU"}>AU</MenuItem>
+                  <MenuItem value={"BR"}>BR</MenuItem>
+                  <MenuItem value={"CA"}>CA</MenuItem>
+                  <MenuItem value={"CH"}>CH</MenuItem>
+                  <MenuItem value={"DE"}>DE</MenuItem>
+                  <MenuItem value={"DK"}>DK</MenuItem>
+                  <MenuItem value={"ES"}>ES</MenuItem>
+                  <MenuItem value={"FI"}>FI</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <ButtonGroup
+              sx={{
+                height: 38,
+              }}
+            >
+              <Button
+                onClick={() => changleLanguage("en")}
+                type="button"
+                color="inherit"
               >
-                <MenuItem value={"AU"}>AU</MenuItem>
-                <MenuItem value={"BR"}>BR</MenuItem>
-                <MenuItem value={"CA"}>CA</MenuItem>
-                <MenuItem value={"CH"}>CH</MenuItem>
-                <MenuItem value={"DE"}>DE</MenuItem>
-                <MenuItem value={"DK"}>DK</MenuItem>
-                <MenuItem value={"ES"}>ES</MenuItem>
-                <MenuItem value={"FI"}>FI</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <ButtonGroup 
-    
-           sx={{
-            height:38
-            
-          }}
-
-          >
-            <Button onClick={() => changleLanguage("en")} type="button"  color='inherit'>
-              EN
+                EN
+              </Button>
+              <Button
+                onClick={() => changleLanguage("ru")}
+                type="button"
+                color="inherit"
+              >
+                RU
+              </Button>
+            </ButtonGroup>
+            <Button
+              sx={{
+                color: "inherit",
+                borderRadius: 1,
+                minWidth: 150,
+                border: 1,
+              }}
+              onClick={toggleColorMode}
+              type="button"
+            >
+              {t("changeTheme")}
             </Button>
-            <Button onClick={() => changleLanguage("ru")} type="button" color='inherit'>
-              RU
-            </Button>
-          </ButtonGroup>
-          <Button
-            sx={{
-              
-              color:'inherit',
-              borderRadius: 1,
-              minWidth: 150,
-              border:1
- 
-            }}
-            onClick={toggleColorMode}
-            type="button"
-          >
-            {t("changeTheme")}
-          </Button>
-        </HeaderContainer>
-    <UsersContainer>
-      {userRequestStatus === Statuses.PENDING && "loading..."}
-      {userRequestStatus === Statuses.FAILURE && "some error..."}
-      {user?.map (user => (
-         <User key={user.login.uuid}{...user}/>
-      ))}
-    </UsersContainer>
-    </Box>
+          </HeaderContainer>
+          <UsersContainer>
+            {userRequestStatus === Statuses.PENDING && <LinearProgress />}
+            {userRequestStatus === Statuses.FAILURE && (
+              <Alert severity="error">{t("error")}</Alert>
+            )}
+            {user?.map((user) => (
+              <User key={user.login.uuid} {...user} />
+            ))}
+          </UsersContainer>
+        </Box>
       </Container>
     </>
   );

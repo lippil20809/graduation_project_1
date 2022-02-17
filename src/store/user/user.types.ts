@@ -40,7 +40,10 @@ export type SetUserRequestSuccessActionCreator = (
 export type Actions =
   | SetUserRequestSuccessAction
   | SetUserRequestStatusFailureAction
-  | SetUserRequestStatusPendingAction
-export type GetUserThunk = ( page: number,
-  results: number | string, nat:string, gender:string) => ThunkAction<void, State, number, Actions>;
-
+  | SetUserRequestStatusPendingAction;
+export type GetUserThunk = (
+  page: number,
+  results: number | string,
+  nat: string,
+  gender: string
+) => ThunkAction<void, State, number, Actions>;

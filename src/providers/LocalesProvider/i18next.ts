@@ -13,6 +13,7 @@ const resources = {
       male: "Male",
       phone: "Phone",
       email: "Email",
+      error: "This is an error alert — check it out!",
     },
   },
   ru: {
@@ -25,6 +26,7 @@ const resources = {
       male: "Мужской",
       phone: "Телефон",
       email: "Почта",
+      error: "Это предупреждение об ошибке — проверьте!",
     },
   },
 };
@@ -34,7 +36,7 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    fallbackLng:'en',
+    fallbackLng: "en",
     resources,
     debug: false,
     detection: {

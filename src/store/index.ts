@@ -1,21 +1,19 @@
 import {
-    createStore,
-    combineReducers,
-    applyMiddleware,
-    Middleware,
-  } from "redux";
-  import thunk from "redux-thunk";
-  
-  import { userReducer  } from "./user";
-  
-  const logger: Middleware = (store) => (next) => (action) => {
-    console.log(action);
-    return next(action);
-  };
-  
-  const reducers = combineReducers({ user: userReducer });
-  const store = createStore(reducers, applyMiddleware(logger, thunk));
+  createStore,
+  combineReducers,
+  applyMiddleware,
+  Middleware,
+} from "redux";
+import thunk from "redux-thunk";
 
+import { userReducer } from "./user";
 
-  
-  export default store;
+const logger: Middleware = (store) => (next) => (action) => {
+  console.log(action);
+  return next(action);
+};
+
+const reducers = combineReducers({ user: userReducer });
+const store = createStore(reducers, applyMiddleware(logger, thunk));
+
+export default store;
