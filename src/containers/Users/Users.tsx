@@ -23,7 +23,13 @@ import {
   LinearProgress,
   Alert,
 } from "@mui/material";
+
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import FemaleIcon from '@mui/icons-material/Female';
+import MaleIcon from '@mui/icons-material/Male';
 import { useModes } from "../../providers/ThemeProvider/theme";
+
 import "../../providers/LocalesProvider/i18next";
 import { useTranslation } from "react-i18next";
 
@@ -58,17 +64,23 @@ const Users: React.FC = () => {
   );
   const [results, setResults] = useState(localStorage.getItem("results") ?? "");
   const [nat, setNat] = useState(localStorage.getItem("nat") ?? "");
-  const [gender, setGender] = useState(
-    localStorage.getItem("gender") ?? "female"
-  );
   const { toggleColorMode } = useModes();
   const { t, i18n } = useTranslation();
   const changleLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
-  const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGender((event.target as HTMLInputElement).value);
+  const [gender, setAlignment] = React.useState<string>(
+    localStorage.getItem("gender") ?? "female"
+  );
+
+  const handleAlignment = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (newAlignment) {
+      setAlignment(newAlignment);
+    }
   };
 
   const handleChangePage = (event: any, value: React.SetStateAction<number>) =>
@@ -95,34 +107,19 @@ const Users: React.FC = () => {
       <Container maxWidth="lg">
         <Box>
           <HeaderContainer>
-            <FormControl
-              sx={{
-                bgcolor: "background.default",
-                color: "text.primary",
-                borderRadius: 1,
-              }}
+            <ToggleButtonGroup
+              value={gender}
+              exclusive
+              onChange={handleAlignment}
+              aria-label="text alignment"
             >
-              <FormLabel id="demo-controlled-radio-buttons-group">
-                {t("genders")}
-              </FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={gender}
-                onChange={handleChangeGender}
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Femal"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>
+              <ToggleButton value="female" aria-label="left aligned">
+                <FemaleIcon />
+              </ToggleButton>
+              <ToggleButton value="male" aria-label="centered">
+                <MaleIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
             <Pagination count={10} page={page} onChange={handleChangePage} />
             <Box sx={{ minWidth: 150 }}>
               <FormControl fullWidth>
