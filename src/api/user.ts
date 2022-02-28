@@ -6,7 +6,7 @@ export const getUser = async (
   page: number,
   results: number | string,
   nat: string,
-  gender: string | null
+  gender: string 
 ) => {
   const { data } = await axios.get<UsersResponse>(
     `https://randomuser.me/api/?page=${page}&results=${results}&nat=${nat}&gender=${gender}`
