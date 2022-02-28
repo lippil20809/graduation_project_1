@@ -10,16 +10,16 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormLabel,
   Select,
   SelectChangeEvent,
   CssBaseline,
   Container,
   ButtonGroup,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
+import FemaleIcon from "@mui/icons-material/Female";
+import MaleIcon from "@mui/icons-material/Male";
 import { useModes } from "../../providers/ThemeProvider/theme";
 import "../../providers/LocalesProvider/i18next";
 import { useTranslation } from "react-i18next";
@@ -38,9 +38,7 @@ const HeaderContainer = styled("div")`
   max-width: 1200px;
   width: 100%;
   justify-content: space-evenly;
-
   flex: 0 0 calc(100% / 4 - 16px);
-
   align-items: center;
   margin: 8px auto;
   padding: 8px;
@@ -53,18 +51,27 @@ const Users: React.FC = () => {
   const [users, setUser] = useState<UsersProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [page, setPage] = useState(1);
-  const [results, setResults] = useState("");
-  const [nat, setNat] = useState("");
-  const [gender, setGender] = useState("female");
+  const [page, setPage] = useState(
+    (Number(localStorage.getItem("page")) || 1) as number
+  );
+  const [results, setResults] = useState(localStorage.getItem("results") ?? "");
+  const [nat, setNat] = useState(localStorage.getItem("nat") ?? "");
+  const [gender, setGender] = useState<string>(
+    localStorage.getItem("gender") ?? "female"
+  );
   const { toggleColorMode } = useModes();
   const { t, i18n } = useTranslation();
   const changleLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
-  const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGender((event.target as HTMLInputElement).value);
+  const handleGender = (
+    event: React.MouseEvent<HTMLElement>,
+    newGender: string
+  ) => {
+    if (newGender) {
+      setGender(newGender);
+    }
   };
 
   const handleChangePage = (event: any, value: React.SetStateAction<number>) =>
@@ -79,6 +86,10 @@ const Users: React.FC = () => {
   };
 
   useEffect(() => {
+    localStorage.setItem("page", JSON.stringify(page));
+    localStorage.setItem("results", results);
+    localStorage.setItem("nat", nat);
+    localStorage.setItem("gender", gender);
     setLoading(true);
     getUser(page, results, nat, gender)
       .then((data) => {
@@ -95,34 +106,19 @@ const Users: React.FC = () => {
       <Container maxWidth="lg">
         <Box>
           <HeaderContainer>
-            <FormControl
-              sx={{
-                bgcolor: "background.default",
-                color: "text.primary",
-                borderRadius: 1,
-              }}
+            <ToggleButtonGroup
+              value={gender}
+              exclusive
+              onChange={handleGender}
+              aria-label="text alignment"
             >
-              <FormLabel id="demo-controlled-radio-buttons-group">
-                {t("genders")}
-              </FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={gender}
-                onChange={handleChangeGender}
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Femal"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>
+              <ToggleButton value="female" aria-label="left aligned">
+                <FemaleIcon />
+              </ToggleButton>
+              <ToggleButton value="male" aria-label="centered">
+                <MaleIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
             <Pagination count={10} page={page} onChange={handleChangePage} />
             <Box sx={{ minWidth: 150 }}>
               <FormControl fullWidth>
@@ -167,29 +163,32 @@ const Users: React.FC = () => {
                 </Select>
               </FormControl>
             </Box>
-            <ButtonGroup 
-      
-             sx={{
-              height:38
-              
-            }}
-
+            <ButtonGroup
+              sx={{
+                height: 38,
+              }}
             >
-              <Button onClick={() => changleLanguage("en")} type="button"  color='inherit'>
+              <Button
+                onClick={() => changleLanguage("en")}
+                type="button"
+                color="inherit"
+              >
                 EN
               </Button>
-              <Button onClick={() => changleLanguage("ru")} type="button" color='inherit'>
+              <Button
+                onClick={() => changleLanguage("ru")}
+                type="button"
+                color="inherit"
+              >
                 RU
               </Button>
             </ButtonGroup>
             <Button
               sx={{
-                
-                color:'inherit',
+                color: "inherit",
                 borderRadius: 1,
                 minWidth: 150,
-                border:1
-   
+                border: 1,
               }}
               onClick={toggleColorMode}
               type="button"

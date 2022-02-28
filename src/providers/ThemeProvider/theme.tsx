@@ -1,15 +1,17 @@
-import  React , { useState, useCallback, createContext, useContext, useEffect,useMemo }  from 'react';
-import {  ThemeProvider, createTheme } from '@mui/material/styles';
+import React, { useState, useContext, useEffect, useMemo } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+type ThemeMode = "light" | "dark";
 
-type ThemeMode = 'light' | 'dark'
-
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = React.createContext({
+  toggleColorMode: () => {},
+});
 export const useModes = () => useContext(ColorModeContext);
 
-const  ToggleColorMode :React.FC = ({ children }) => {
- 
-  const [mode, setMode] = useState<ThemeMode>((localStorage.getItem('theme') ?? 'light') as ThemeMode);
+const ToggleColorMode: React.FC = ({ children }) => {
+  const [mode, setMode] = useState<ThemeMode>(
+    (localStorage.getItem("theme") ?? "light") as ThemeMode
+  );
 
   useEffect(() => {
     localStorage.setItem("theme", mode);
@@ -18,10 +20,10 @@ const  ToggleColorMode :React.FC = ({ children }) => {
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    [],
+    []
   );
 
   const theme = useMemo(
@@ -31,16 +33,14 @@ const  ToggleColorMode :React.FC = ({ children }) => {
           mode,
         },
       }),
-    [mode],
+    [mode]
   );
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-      { children }
-      </ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ColorModeContext.Provider>
   );
-}
+};
 
-export default ToggleColorMode
+export default ToggleColorMode;
