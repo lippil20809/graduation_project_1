@@ -2,12 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import User from "../../components/User";
-import Filter from "../Filter";
 import { getSlise } from "../../store/user";
 import { Statuses } from "../../store/types";
 import {
-  CssBaseline,
-  Container,
   LinearProgress,
   Alert,
 } from "@mui/material";
@@ -28,9 +25,6 @@ const Users: React.FC = () => {
   const { t } = useTranslation();
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Filter />
         <UsersContainer>
           {userRequestStatus === Statuses.PENDING && <LinearProgress />}
           {userRequestStatus === Statuses.FAILURE && (
@@ -40,7 +34,6 @@ const Users: React.FC = () => {
             <User key={user.login.uuid} {...user} />
           ))}
         </UsersContainer>
-      </Container>
     </>
   );
 };
