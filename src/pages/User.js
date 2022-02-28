@@ -1,7 +1,7 @@
 import Users from "../containers/Users";
 
 const UsersPage = () => {
-    return <Users/>
-}
+  return <Users />;
+};
 
-export default UsersPage
+export default UsersPage;

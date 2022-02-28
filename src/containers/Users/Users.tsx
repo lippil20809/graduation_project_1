@@ -18,14 +18,12 @@ import {
   ButtonGroup,
   LinearProgress,
   Alert,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
-
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import FemaleIcon from '@mui/icons-material/Female';
-import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from "@mui/icons-material/Female";
+import MaleIcon from "@mui/icons-material/Male";
 import { useModes } from "../../providers/ThemeProvider/theme";
-
 import "../../providers/LocalesProvider/i18next";
 import { useTranslation } from "react-i18next";
 
@@ -60,22 +58,21 @@ const Users: React.FC = () => {
   );
   const [results, setResults] = useState(localStorage.getItem("results") ?? "");
   const [nat, setNat] = useState(localStorage.getItem("nat") ?? "");
+  const [gender, setGender] = React.useState<string>(
+    localStorage.getItem("gender") ?? "female"
+  );
   const { toggleColorMode } = useModes();
   const { t, i18n } = useTranslation();
   const changleLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
-  const [gender, setAlignment] = React.useState<string>(
-    localStorage.getItem("gender") ?? "female"
-  );
-
-  const handleAlignment = (
+  const handleGender = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
+    newGender: string
   ) => {
-    if (newAlignment) {
-      setAlignment(newAlignment);
+    if (newGender) {
+      setGender(newGender);
     }
   };
 
@@ -106,7 +103,7 @@ const Users: React.FC = () => {
             <ToggleButtonGroup
               value={gender}
               exclusive
-              onChange={handleAlignment}
+              onChange={handleGender}
               aria-label="text alignment"
             >
               <ToggleButton value="female" aria-label="left aligned">
