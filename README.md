@@ -1,5 +1,5 @@
 # Проект написан в двух ветках 
 
-В ветке main проект написан через React-redux
-В ветке main_hook проект написан через React Hooks
+## В ветке main проект написан через React-redux
+## В ветке main_hook проект написан через React Hooks
 
