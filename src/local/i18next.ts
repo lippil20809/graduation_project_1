@@ -13,6 +13,7 @@ const resources = {
       male: "Male",
       phone: "Phone",
       email: "Email",
+      error: "This is an error alert — check it out!",
     },
   },
   ru: {
@@ -25,6 +26,7 @@ const resources = {
       male: "Мужской",
       phone: "Телефон",
       email: "Почта",
+      error: "Это предупреждение об ошибке — проверьте!",
     },
   },
 };

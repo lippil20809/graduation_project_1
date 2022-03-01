@@ -8,7 +8,7 @@ export const ColorModeContext = React.createContext({
 });
 export const useModes = () => useContext(ColorModeContext);
 
-const ToggleColorMode: React.FC = ({ children }) => {
+const ThemeProviders: React.FC = ({ children }) => {
   const [mode, setMode] = useState<ThemeMode>(
     (localStorage.getItem("theme") ?? "light") as ThemeMode
   );
@@ -43,4 +43,4 @@ const ToggleColorMode: React.FC = ({ children }) => {
   );
 };
 
-export default ToggleColorMode;
+export default ThemeProviders;

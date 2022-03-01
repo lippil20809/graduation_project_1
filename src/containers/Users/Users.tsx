@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getUser } from "../../api/user";
 import { UsersProps } from "containers/Users/Users.type";
-import User from "../../commponents/User/User";
+import User from "../../components/User/User";
 import {
   Pagination,
   Button,
@@ -20,9 +20,9 @@ import {
 } from "@mui/material";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-import { useModes } from "../../providers/ThemeProvider/theme";
-import "../../providers/LocalesProvider/i18next";
+import { useModes } from "../../providers/ThemeProvider";
 import { useTranslation } from "react-i18next";
+import { getByKey, setByKey } from "../../helpers/sessionStorage";
 
 const UsersContainer = styled("div")`
   display: flex;
@@ -51,14 +51,10 @@ const Users: React.FC = () => {
   const [users, setUser] = useState<UsersProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [page, setPage] = useState(
-    (Number(localStorage.getItem("page")) || 1) as number
-  );
-  const [results, setResults] = useState(localStorage.getItem("results") ?? "");
-  const [nat, setNat] = useState(localStorage.getItem("nat") ?? "");
-  const [gender, setGender] = useState<string>(
-    localStorage.getItem("gender") ?? "female"
-  );
+  const [page, setPage] = useState((Number(getByKey("page")) || 1) as number);
+  const [results, setResults] = useState<string>(getByKey("results"));
+  const [nat, setNat] = useState<string>(getByKey("nat"));
+  const [gender, setGender] = useState<string>(getByKey("gender"));
   const { toggleColorMode } = useModes();
   const { t, i18n } = useTranslation();
   const changleLanguage = (lang: string) => {
@@ -86,10 +82,10 @@ const Users: React.FC = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("page", JSON.stringify(page));
-    localStorage.setItem("results", results);
-    localStorage.setItem("nat", nat);
-    localStorage.setItem("gender", gender);
+    setByKey("page", page);
+    setByKey("results", results);
+    setByKey("nat", nat);
+    setByKey("gender", gender);
     setLoading(true);
     getUser(page, results, nat, gender)
       .then((data) => {

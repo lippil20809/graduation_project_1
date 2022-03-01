@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserProps } from "./User.types";
 import {
-  Button,
+  ListItemButton,
   Typography,
   Dialog,
   ListItem,
@@ -10,7 +10,6 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
-import "../../providers/LocalesProvider/i18next";
 import { useTranslation } from "react-i18next";
 
 const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
@@ -20,8 +19,8 @@ const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
   const { t } = useTranslation();
   return (
     <>
-      <Button onClick={handleOpen}>
-        <ListItem alignItems="flex-start">
+      <ListItemButton onClick={handleOpen}>
+        <ListItem >
           <ListItemAvatar>
             <Avatar alt={name.first} src={picture.large} />
           </ListItemAvatar>
@@ -31,21 +30,10 @@ const User: React.FC<UserProps> = ({ name, email, phone, picture, nat }) => {
                 {name.title} {name.first} {name.last}
               </>
             }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {t("phone")}: {phone}
-                </Typography>
-              </React.Fragment>
-            }
+  
           />
         </ListItem>
-      </Button>
+      </ListItemButton>
       <Divider variant="inset" />
       <Dialog
         open={open}
