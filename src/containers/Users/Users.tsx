@@ -17,6 +17,8 @@ import {
   ButtonGroup,
   ToggleButton,
   ToggleButtonGroup,
+  LinearProgress,
+  Alert
 } from "@mui/material";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
@@ -100,106 +102,106 @@ const Users: React.FC = () => {
     <>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Box>
-          <HeaderContainer>
-            <ToggleButtonGroup
-              value={gender}
-              exclusive
-              onChange={handleGender}
-              aria-label="text alignment"
-            >
-              <ToggleButton value="female" aria-label="left aligned">
-                <FemaleIcon />
-              </ToggleButton>
-              <ToggleButton value="male" aria-label="centered">
-                <MaleIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-            <Pagination count={10} page={page} onChange={handleChangePage} />
-            <Box sx={{ minWidth: 150 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  {t("results")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={results}
-                  label="Results"
-                  onChange={handleChangeResults}
-                >
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={8}>8</MenuItem>
-                  <MenuItem value={16}>16</MenuItem>
-                  <MenuItem value={32}>32</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Box sx={{ minWidth: 170 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  {t("nationality")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={nat}
-                  label="Nat"
-                  onChange={handleChangeNat}
-                >
-                  <MenuItem value={"AU"}>AU</MenuItem>
-                  <MenuItem value={"BR"}>BR</MenuItem>
-                  <MenuItem value={"CA"}>CA</MenuItem>
-                  <MenuItem value={"CH"}>CH</MenuItem>
-                  <MenuItem value={"DE"}>DE</MenuItem>
-                  <MenuItem value={"DK"}>DK</MenuItem>
-                  <MenuItem value={"ES"}>ES</MenuItem>
-                  <MenuItem value={"FI"}>FI</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <ButtonGroup
-              sx={{
-                height: 38,
-              }}
-            >
-              <Button
-                onClick={() => changleLanguage("en")}
-                type="button"
-                color="inherit"
+        <HeaderContainer>
+          <ToggleButtonGroup
+            value={gender}
+            exclusive
+            onChange={handleGender}
+            aria-label="text alignment"
+          >
+            <ToggleButton value="female" aria-label="left aligned">
+              <FemaleIcon />
+            </ToggleButton>
+            <ToggleButton value="male" aria-label="centered">
+              <MaleIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <Pagination count={10} page={page} onChange={handleChangePage} />
+          <Box sx={{ minWidth: 150 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                {t("results")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={results}
+                label="Results"
+                onChange={handleChangeResults}
               >
-                EN
-              </Button>
-              <Button
-                onClick={() => changleLanguage("ru")}
-                type="button"
-                color="inherit"
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+                <MenuItem value={32}>32</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 170 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                {t("nationality")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={nat}
+                label="Nat"
+                onChange={handleChangeNat}
               >
-                RU
-              </Button>
-            </ButtonGroup>
+                <MenuItem value={"AU"}>AU</MenuItem>
+                <MenuItem value={"BR"}>BR</MenuItem>
+                <MenuItem value={"CA"}>CA</MenuItem>
+                <MenuItem value={"CH"}>CH</MenuItem>
+                <MenuItem value={"DE"}>DE</MenuItem>
+                <MenuItem value={"DK"}>DK</MenuItem>
+                <MenuItem value={"ES"}>ES</MenuItem>
+                <MenuItem value={"FI"}>FI</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <ButtonGroup
+            sx={{
+              height: 38,
+            }}
+          >
             <Button
-              sx={{
-                color: "inherit",
-                borderRadius: 1,
-                minWidth: 150,
-                border: 1,
-              }}
-              onClick={toggleColorMode}
+              onClick={() => changleLanguage("en")}
               type="button"
+              color="inherit"
             >
-              {t("changeTheme")}
+              EN
             </Button>
-          </HeaderContainer>
-          <UsersContainer>
-            {!loading && "loading..."}
-            {error && "some error..."}
-            {users?.map((user) => (
-              <User key={user.login.uuid} {...user} />
-            ))}
-          </UsersContainer>
-        </Box>
+            <Button
+              onClick={() => changleLanguage("ru")}
+              type="button"
+              color="inherit"
+            >
+              RU
+            </Button>
+          </ButtonGroup>
+          <Button
+            sx={{
+              color: "inherit",
+              borderRadius: 1,
+              minWidth: 150,
+              border: 1,
+            }}
+            onClick={toggleColorMode}
+            type="button"
+          >
+            {t("changeTheme")}
+          </Button>
+        </HeaderContainer>
+        <UsersContainer>
+          {!loading && <LinearProgress />}
+          {error && (
+            <Alert severity="error">{t("error")}</Alert>
+          )}
+          {users?.map((user) => (
+            <User key={user.login.uuid} {...user} />
+          ))}
+        </UsersContainer>
       </Container>
     </>
   );
