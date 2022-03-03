@@ -20,7 +20,7 @@ import MaleIcon from "@mui/icons-material/Male";
 import "../../locales/i18next";
 import { useTranslation } from "react-i18next";
 import { useModes } from "../../providers/ThemeProvider/ThemeProvider";
-import { getByKey, setByKey } from "../../helpers/sessionStorage";
+import { getByKey, setByKey } from "../../helpers/localStorage";
 
 const HeaderContainer = styled("div")`
   display: flex;
